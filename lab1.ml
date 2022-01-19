@@ -264,13 +264,16 @@ price, if one will need a bill smaller than a 20 to pay for the
 item. For instance, a price of 100 can be paid for with 20s (and
 larger denominations) alone, but a price of 105 will require a bill
 smaller than a 20 (for the 5 left over after the 100 is paid). We will
-assume (perhaps unrealistically) that all prices are given as
-integers. For this lab, you may assume all prices given are
+assume (perhaps unrealistically) that all prices are given as integers
+and (more realistically) that 50s, 100s, and larger denomination bills
+are not available. In addition, you may assume all prices given are
 non-negative.
 
    # small_bills 105 ;;
    - : bool = true
    # small_bills 100 ;;
+   - : bool = false
+   # small_bills 150 ;;
    - : bool = false
 ......................................................................*)
 
@@ -486,9 +489,10 @@ Exercise 12: Revise your code to make sure that it uses the header
 line given at <https://url.cs51.io/frustrum>.
 ......................................................................*)
 
-(*** Place your updated revised version below, not as a comment,
-     because we'll be unit testing it. ***)
-
+(*** Place your updated revised version below, *not* as a comment,
+     because we'll be unit testing it. (The two lines we provide are
+     just to allow the unit tests to have something to compile
+     against. You'll want to just delete them and start over.) ***)
 (* SOLUTION: There are, of course, lots of problems with the original
    code; it's almost completely unreadable and obscure. Let's start by
    at least adding white space -- line breaks and indentation -- to
@@ -564,6 +568,8 @@ let frustrum_volume (radius1 : float)
   (Float.pi *. height /. 3.)
   *. (radius1 ** 2. +. radius1 *. radius2 +. radius2 ** 2.) ;;
 
+(* Compare this with the original code above. Vast improvement, no? *)
+  
 (*======================================================================
 Part 5: Utilizing recursion
 
@@ -626,8 +632,8 @@ let rec sum_from_zero (x : int) : int =
   else if x < 0 then x + sum_from_zero (succ x)
   else x + sum_from_zero (pred x) ;;
 
-(* You may notice that there's a lot of similarity between the then
-   and else branches. We could factor out the similarities by
+(* You may notice that there's a lot of similarity between the `then`
+   and `else` branches. We could factor out the similarities by
    narrowing the scope of the conditional test inside, and use it just
    for selecting whether to use the function `succ` or `pred`. The
    result is this: 
