@@ -166,7 +166,7 @@ you'd like.
    # 3 - (2 - 1) ;;
    - : int = 2
  *)
-  
+
 (*======================================================================
 Part 2: Types and type inference
 
@@ -182,7 +182,7 @@ let exercise6a : int = 42 ;;
 let exercise6b : string =
   let greet y = "Hello " ^ y
   in greet "World!";;
-  
+
 (* If you were confused about what the `^` operator does, you'd have
    found it in the Stdlib module described in the OCaml
    documentation online. *)
@@ -195,7 +195,7 @@ let exercise6d : int -> bool =
 
 let exercise6e : int -> float -> int =
   fun x -> fun y -> x + int_of_float y ;;
-  
+
 (* The reasoning for exercise6e goes something like this: The argument
 
    of the function is `x`, which returns another function, with a
@@ -308,13 +308,13 @@ innumerable algorithms since the early history of the Christian
 church.
 
 The algorithm to calculate the Computus function is given in Problem
-28 in the textbook, which you'll want to refer to.
+30 in the textbook, which you'll want to refer to.
 
 Write two functions that, given a year, calculate the month
 (`computus_month`) and day (`computus_day`) of Easter in that year via
 the Computus function.
 
-In 2018, Easter took place on April 1st. Your functions should reflect 
+In 2018, Easter took place on April 1st. Your functions should reflect
 that:
 
    # computus_month 2018;;
@@ -323,8 +323,8 @@ that:
    - : int = 1
 ......................................................................*)
 
-(* SOLUTION: You might have implemented a `computus_month` function like 
-   this: 
+(* SOLUTION: You might have implemented a `computus_month` function like
+   this:
 
     let computus_month (year : int) : int =
       let a = year mod 19 in
@@ -342,7 +342,7 @@ that:
       (h + l - 7 * m + 114) / 31 ;;
 
    and then just made a copy and modify it to form the `computus_day`
-   function: 
+   function:
 
     let computus_day (year : int) : int =
       let a = year mod 19 in
@@ -395,7 +395,7 @@ let computus_day (year : int) =
    remainder of that division (`x mod y`). By defining a function to
    calculate both of these values, and returning them as a pair, we can
    eliminate this redundancy, and reduce the possibility that a change to
-   one of the pairs doesn't get reflected in the other. 
+   one of the pairs doesn't get reflected in the other.
 
     let divmod (x : int) (y : int) : int * int =
       x / y, x mod y ;;
@@ -468,7 +468,7 @@ with radii 3 and 4 and height 4 -- and you get
 
 which is (more or less) the right answer. Nonetheless, you have a
 strong sense that the code can be considerably improved. *)
-  
+
 (*......................................................................
 Exercise 11: Go over the code with your lab partner, making whatever
 modifications you think can improve the code, placing your revised
@@ -513,9 +513,9 @@ line given at <https://url.cs51.io/frustrum>.
    dropping the `let h = b`, too.) We should also mark the intended
    types for the arguments and for the return value:
 
-   let frustrum_volume (radius1 : float) 
-                       (radius2 : float) 
-                       (height : float) 
+   let frustrum_volume (radius1 : float)
+                       (radius2 : float)
+                       (height : float)
                      : float =
      let a =
        let s a = a * a in
@@ -530,9 +530,9 @@ line given at <https://url.cs51.io/frustrum>.
    local variable `a` (for answer?), which it just returns. There's no
    reason to name the return value in that way.
 
-   let frustrum_volume (radius1 : float) 
-                       (radius2 : float) 
-                       (height : float) 
+   let frustrum_volume (radius1 : float)
+                       (radius2 : float)
+                       (height : float)
                      : float =
      (3.1416 *. height /. float_of_int 3)
      *. (radius1 *. radius1 +. radius2 *. radius2 +. radius1 *. radius2) ;;
@@ -541,9 +541,9 @@ line given at <https://url.cs51.io/frustrum>.
    operator, and we might as well order the three terms in the more
    standard way (as shown in the equation in the textbook):
 
-   let frustrum_volume (radius1 : float) 
-                       (radius2 : float) 
-                       (height : float) 
+   let frustrum_volume (radius1 : float)
+                       (radius2 : float)
+                       (height : float)
                      : float =
      (3.1416 *. height /. float_of_int 3)
      *. (radius1 ** 2. +. radius1 *. radius2 +. radius2 ** 2.) ;;
@@ -556,20 +556,20 @@ line given at <https://url.cs51.io/frustrum>.
    we can update the documentation to make this all clearer as well.
 
    In the end, the code review process converges on the following: *)
-       
+
 (* frustrum_volume radius1 radius2 height -- Returns the volume of a
    conical frustrum given the radii of the two faces ( `radius1` and
    `radius2`) and the perpendicular `height` *)
-  
-let frustrum_volume (radius1 : float) 
-                    (radius2 : float) 
-                    (height : float) 
+
+let frustrum_volume (radius1 : float)
+                    (radius2 : float)
+                    (height : float)
                   : float =
   (Float.pi *. height /. 3.)
   *. (radius1 ** 2. +. radius1 *. radius2 +. radius2 ** 2.) ;;
 
 (* Compare this with the original code above. Vast improvement, no? *)
-  
+
 (*======================================================================
 Part 5: Utilizing recursion
 
@@ -626,7 +626,7 @@ head*!)
    former case we want to count down (using the built-in `pred`
    function) and for negatives we want to count up toward zero (using
    `succ`). *)
-  
+
 let rec sum_from_zero (x : int) : int =
   if x = 0 then 0
   else if x < 0 then x + sum_from_zero (succ x)
@@ -636,26 +636,26 @@ let rec sum_from_zero (x : int) : int =
    and `else` branches. We could factor out the similarities by
    narrowing the scope of the conditional test inside, and use it just
    for selecting whether to use the function `succ` or `pred`. The
-   result is this: 
-   
+   result is this:
+
     let rec sum_from_zero (x : int) : int =
       if x = 0 then 0
       else x + sum_from_zero (if x < 0 then succ x else pred x) ;;
 
    or even this
-  
+
     let rec sum_from_zero (x : int) : int =
       if x = 0 then 0
       else x + sum_from_zero ((if x < 0 then succ else pred) x) ;;
 
    The latter, frankly, may be taking things too far. It's a bit too
-   "cute". 
+   "cute".
 
    In this exercise, we were explicitly looking for this recursive
    solution. However, there's a closed-form solution for the sum, the
    one that Gauss himself used (see footnote 7 in Chapter 14 of the
    textbook), that we can use to generate the following non-recursive
-   version. 
+   version.
 
     let sum_from_zero (x : int) : int =
       (x * (succ (abs x))) / 2 ;;
