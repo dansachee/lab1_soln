@@ -274,7 +274,7 @@ non-negative.
    # small_bills 100 ;;
    - : bool = false
    # small_bills 150 ;;
-   - : bool = false
+   - : bool = true
 ......................................................................*)
 
 let small_bills (price : int) : bool =
